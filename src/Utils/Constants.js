@@ -19,3 +19,11 @@ export const GENDER = [
   { value: "female", label: "Female" },
   { value: "other", label: "Other" },
 ];
+
+export const API_REQ_TYPE = {
+  GET: "get",
+  POST: "post",
+  PATCH: "patch",
+  PUT: "put",
+  DELETE: "delete",
+};
