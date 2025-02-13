@@ -15,7 +15,7 @@ import { registerUser } from "../../Services/AuthServices";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Routings/Paths";
 import RegisterBg from "../../Assets/Images/backgrounds/RegisterBg.jpg";
-import "../../App.css";
+import "../../Styles/Styles.scss";
 
 function Register() {
   const navigate = useNavigate();

@@ -7,6 +7,9 @@ import Contact from "../Pages/Contact";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
+import MenuManager from "../Pages/AdminOps/MenuManager";
+import AdminDash from "../Pages/Dashboard/AdminDash";
+import CustomerDash from "../Pages/Dashboard/CustomerDash";
 import NotFound from "../Pages/Auth/NotFound";
 import { PATHS } from "./Paths";
 
@@ -52,6 +55,18 @@ function RoutePaths() {
       <Route
         path={PATHS.CONTACT}
         element={<ProtectedRoute element={<Contact />} />}
+      />
+      <Route
+        path={PATHS.MENU_MANAGER}
+        element={<ProtectedRoute element={<MenuManager />} />}
+      />
+      <Route
+        path={PATHS.ADMIN_DASHBOARD}
+        element={<ProtectedRoute element={<AdminDash />} />}
+      />
+      <Route
+        path={PATHS.CUSTOMER_DASHBOARD}
+        element={<ProtectedRoute element={<CustomerDash />} />}
       />
     </Routes>
   );

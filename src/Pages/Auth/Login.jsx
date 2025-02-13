@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginBg from "../../Assets/Images/backgrounds/LoginBg.png"; // Ensure correct path
 import { loginUser } from "../../Services/AuthServices";
 import { PATHS } from "../../Routings/Paths";
-import "../../App.css";
+import "../../Styles/Styles.scss";
 
 const LoginPage = () => {
   const navigate = useNavigate();

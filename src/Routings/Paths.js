@@ -6,4 +6,7 @@ export const PATHS = {
   HOME: "/home",
   ABOUT: "/about",
   CONTACT: "/contact",
+  MENU_MANAGER: "/menu-manager",
+  ADMIN_DASHBOARD: "/admin-dashboard",
+  CUSTOMER_DASHBOARD: "/customer-dashboard",
 };
