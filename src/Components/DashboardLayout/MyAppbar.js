@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +13,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { PATHS } from "../../Routings/Paths";
 
 const pages = [
   { title: "Home", path: "/home" },
@@ -22,9 +23,10 @@ const pages = [
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function MyAppbar() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const userData = JSON.parse(localStorage.getItem("UserDetails"));
 
   // const handleOpenNavMenu = (event) => {
   //   setAnchorElNav(event.currentTarget);
@@ -38,7 +40,19 @@ function MyAppbar() {
   //   setAnchorElNav(null);
   // };
 
-  const handleCloseUserMenu = () => {
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate(PATHS.LOGIN);
+  };
+
+  const handleCloseUserMenu = (option) => {
+    switch (option) {
+      case "Logout":
+        handleLogout();
+        break;
+      default:
+        break;
+    }
     setAnchorElUser(null);
   };
 
@@ -131,6 +145,7 @@ function MyAppbar() {
             ))}
           </Box>
 
+          <Typography sx={{ mr: 2 }}>{userData?.userName}</Typography>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -154,7 +169,10 @@ function MyAppbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
