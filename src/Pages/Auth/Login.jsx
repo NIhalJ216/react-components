@@ -60,7 +60,7 @@ const LoginPage = () => {
       <Container maxWidth="xs">
         <Paper elevation={3} className="PaperBlurr">
           <Typography variant="h5" gutterBottom>
-            Jadhav Tiffin Services
+              Tiffin Services
           </Typography>
           <TextField
             name="userName"

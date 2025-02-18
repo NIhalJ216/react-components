@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Grid, Typography, TextField } from "@mui/material";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { addMenu, getMenuById } from "../../Services/MenuServices";
+import { addMenu, getMenuById, updateMenu } from "../../Services/MenuServices";
 import { PATHS } from "../../Routings/Paths";
 
 function MenuManager() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isUpdate, setIsUpdate] = useState(false)
   const [payload, setPayload] = useState({
+    menuItemId:"",
     title: "",
     details: "",
     price: "",
@@ -26,11 +28,33 @@ function MenuManager() {
     updatePayload({ [name]: value });
   };
 
+  const handleUpdateMenu = async () => {
+    const res = await updateMenu(payload);
+    if (res.isSuccess) {
+      alert("Menu Updated Successfully");
+      updatePayload({
+        menuItemId:"",
+        title: "",
+        details: "",
+        price: "",
+      });
+    } else {
+      alert("Failed to Update menu");
+      console.log(res.error);
+    }
+  }
+  
   const handleAddMenu = async () => {
-    const res = await addMenu(payload);
+    const data = {
+      title: payload.title,
+      details: payload.details,
+      price: payload.price,
+    }
+    const res = await addMenu(data);
     if (res.isSuccess) {
       alert("Menu Added Successfully");
       updatePayload({
+        menuItemId:"",
         title: "",
         details: "",
         price: "",
@@ -46,6 +70,7 @@ function MenuManager() {
       const res = await getMenuById(menuItemId);
       if (res.isSuccess) {
         updatePayload({
+          menuItemId: res.data[0].menuItemId,
           title: res.data[0].title,
           details: res.data[0].details,
           price: res.data[0].price,
@@ -58,6 +83,7 @@ function MenuManager() {
 
     if (location.state) {
       fetchMenuItem(location.state.menuItemId);
+      setIsUpdate(true);
     }
   }, [location]);
 
@@ -65,7 +91,7 @@ function MenuManager() {
     <Grid container justifyContent="center">
       <Grid item xs={12} mt={1}>
         <Typography variant="h5" align="center">
-          Create Menu
+          {isUpdate ? 'Update' : 'Create'} Menu
         </Typography>
       </Grid>
       <Grid item xs={12} container justifyContent="center">
@@ -115,9 +141,16 @@ function MenuManager() {
       </Grid>
       <Grid item xs={12} container justifyContent="center" mt={2}>
         <Grid item xs={4} textAlign="center">
+          {isUpdate ? (
+          <Button variant="contained" color="primary" onClick={handleUpdateMenu}>
+          Update
+        </Button>
+          ) : (
+          
           <Button variant="contained" color="primary" onClick={handleAddMenu}>
-            Add
-          </Button>
+          Add
+        </Button>
+          )}
           <Button
             variant="contained"
             color="primary"

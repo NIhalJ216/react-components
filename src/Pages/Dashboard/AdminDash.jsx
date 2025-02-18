@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Button,
   Divider,
@@ -10,11 +10,13 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { PATHS } from "../../Routings/Paths";
-import { getMenuList } from "../../Services/MenuServices";
+import { deleteMenu, getMenuList } from "../../Services/MenuServices";
 
 function AdminDash() {
   const navigate = useNavigate();
+  const isMounted = useRef(false);
   const [menuList, setMenuList] = useState([]);
 
   const fetchMenuList = async () => {
@@ -28,11 +30,25 @@ function AdminDash() {
   };
 
   useEffect(() => {
-    fetchMenuList();
+    if (!isMounted.current) {
+      fetchMenuList();
+      isMounted.current = true;
+    }
   }, []);
 
   const handleUpdateMenu = (menuItemId) => {
     navigate(PATHS.MENU_MANAGER, { state: { menuItemId } });
+  };
+
+  const handleDeleteMenu = async(menuItemId) => {
+    const res = await deleteMenu(menuItemId);
+    if (res.isSuccess) {
+      alert(res.data)
+      fetchMenuList();
+    } else {
+      alert("Failed to delete menu");
+      console.log(res.error);
+    };
   };
 
   return (
@@ -63,6 +79,13 @@ function AdminDash() {
             <CardContent>
               <Typography variant="h5" component="div">
                 {menuItem.title}
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => handleDeleteMenu(menuItem.menuItemId)}
+                  sx={{ float: "right" }}
+                >
+                  <DeleteIcon />
+                </IconButton>
                 <IconButton
                   aria-label="edit"
                   onClick={() => handleUpdateMenu(menuItem.menuItemId)}
