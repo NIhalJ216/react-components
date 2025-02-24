@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Grid,
   Box,
@@ -9,17 +9,20 @@ import {
   InputAdornment,
   IconButton,
   Button,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
-import LoginBg from "../../Assets/Images/backgrounds/LoginBg.png"; // Ensure correct path
-import { loginUser } from "../../Services/AuthServices";
-import { PATHS } from "../../Routings/Paths";
-import "../../Styles/Styles.scss";
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
+import LoginBg from '../../Assets/Images/backgrounds/LoginBg.png'; // Ensure correct path
+import { loginUser } from '../../Services/AuthServices';
+import { PATHS } from '../../Routings/Paths';
+import '../../Styles/Styles.scss';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [payload, setPayload] = useState({ userName: "", password: "" });
+  const [payload, setPayload] = useState({
+    userName: '',
+    password: '',
+  });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -31,19 +34,27 @@ const LoginPage = () => {
   };
 
   const handleLogin = async () => {
-    const res = await loginUser(payload);
-    if (res.isSuccess) {
-      const data = {
-        userId: res.data.userId,
-        userName: res.data.userName,
-        role: res.data.role,
-        authToken: "AUTH_TOKEN",
-      };
-      localStorage.setItem("UserDetails", JSON.stringify(data));
-      navigate(PATHS.DASHBOARD);
-    } else {
-      alert("ERROR");
-    }
+    const data = {
+      userId: 'id',
+      userName: 'TEST USER',
+      role: 'ROLE',
+      authToken: 'AUTH_TOKEN',
+    };
+    localStorage.setItem('UserDetails', JSON.stringify(data));
+    navigate(PATHS.ABOUT);
+    // const res = await loginUser(payload);
+    // if (res.isSuccess) {
+    //   const data = {
+    //     userId: res.data.userId,
+    //     userName: res.data.userName,
+    //     role: res.data.role,
+    //     authToken: "AUTH_TOKEN",
+    //   };
+    //   localStorage.setItem("UserDetails", JSON.stringify(data));
+    //   navigate(PATHS.DASHBOARD);
+    // } else {
+    //   alert("ERROR");
+    // }
   };
 
   return (
@@ -60,7 +71,7 @@ const LoginPage = () => {
       <Container maxWidth="xs">
         <Paper elevation={3} className="PaperBlurr">
           <Typography variant="h5" gutterBottom>
-              Tiffin Services
+            Tiffin Services
           </Typography>
           <TextField
             name="userName"
@@ -79,12 +90,19 @@ const LoginPage = () => {
             margin="normal"
             label="Password"
             variant="outlined"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={handleTogglePassword} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  <IconButton
+                    onClick={handleTogglePassword}
+                    edge="end"
+                  >
+                    {showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -93,17 +111,17 @@ const LoginPage = () => {
           <Grid
             container
             justifyContent="space-between"
-            sx={{ marginTop: "8px" }}
+            sx={{ marginTop: '8px' }}
           >
             <Link
               to="/forgot-password"
-              style={{ textDecoration: "none", fontSize: "0.9rem" }}
+              style={{ textDecoration: 'none', fontSize: '0.9rem' }}
             >
               Forgot Password?
             </Link>
             <Link
               to="/register"
-              style={{ textDecoration: "none", fontSize: "0.9rem" }}
+              style={{ textDecoration: 'none', fontSize: '0.9rem' }}
             >
               Register
             </Link>
@@ -112,7 +130,7 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             color="primary"
-            sx={{ marginTop: "1.5rem" }}
+            sx={{ marginTop: '1.5rem' }}
             onClick={handleLogin}
           >
             Login
